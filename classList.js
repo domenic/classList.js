@@ -1,14 +1,14 @@
 /*
-* classList.js: Implements a cross-browser element.classList getter.
-* 2011-01-24
-*
-* By Eli Grey, http://eligrey.com
-* Public Domain.
-* NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
-*/
+ * classList.js: Implements a cross-browser element.classList getter.
+ * 2011-01-24
+ *
+ * By Eli Grey, http://eligrey.com
+ * Public Domain.
+ * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+ */
 
 /*jslint laxbreak: true, eqeqeq: true, newcap: true, immed: true, strict: true,
-maxlen: 90 */
+  maxlen: 90 */
 /*global Element */
 
 /*! @source https://github.com/DomenicDenicola/classList.js/file-edit/master/classList.js */
@@ -24,11 +24,11 @@ var
 	, protoProp = "prototype"
 	, elemCtrProto = Element[protoProp]
 	, objCtr = Object
-	  strTrim = String[protoProp].trim || function () {
+	, strTrim = String[protoProp].trim || function () {
 		return this.replace(/^\s+|\s+$/g, "");
 	}
 	, arrIndexOf = Array[protoProp].indexOf || function (item) {
-		for (var i = 0, len = this.length; i &lt; len; i++) {
+		for (var i = 0, len = this.length; i < len; i++) {
 			if (i in this && this[i] === item) {
 				return i;
 			}
@@ -61,7 +61,7 @@ var
 			  trimmedClasses = strTrim.call(elem.className)
 			, classes = trimmedClasses ? trimmedClasses.split(/\s+/) : []
 		;
-		for (var i = 0, len = classes.length; i &lt; len; i++) {
+		for (var i = 0, len = classes.length; i < len; i++) {
 			this.push(classes[i]);
 		}
 		this._updateClassName = function () {
@@ -70,7 +70,17 @@ var
 	}
 	, classListProto = ClassList[protoProp] = []
 	, classListGetter = function () {
-		return new ClassList(this);
+		var classList = new ClassList(this);
+
+		// Remove all properties we've prototyped onto Array ourselves, since they will have enumerable: true.
+		for (var propName in Array.prototype) {
+			classList[propName] = undefined;
+		}
+
+		// Remove all built-in array properties.
+		classList.concat = classList.every = classList.filter = classList.forEach = classList.indexOf = classList.join = classList.lastIndexOf = classList.map = classList.pop = classList.push = classList.reduce = classList.reduceRight = classList.reverse = classList.shift = classList.slice = classList.some = classList.sort = classList.splice = classList.toLocaleString = classList.unshift = undefined;
+
+		return classList;
 	}
 ;
 // Most DOMException implementations don't allow calling DOMException's toString()
