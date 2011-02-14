@@ -1,21 +1,21 @@
 /*
- * classList.js: Implements a cross-browser element.classList getter.
- * 2011-01-24
- *
- * By Eli Grey, http://eligrey.com
- * Public Domain.
- * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
- */
+* classList.js: Implements a cross-browser element.classList getter.
+* 2011-01-24
+*
+* By Eli Grey, http://eligrey.com
+* Public Domain.
+* NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+*/
 
 /*jslint laxbreak: true, eqeqeq: true, newcap: true, immed: true, strict: true,
-  maxlen: 90 */
+maxlen: 90 */
 /*global Element */
 
-/*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js*/
+/*! @source https://github.com/DomenicDenicola/classList.js/file-edit/master/classList.js */
 
-"use strict";
+/* forked and edited by Domenic Denicola: see @source link for changelog. */
 
-if (typeof Element !== "undefined" && !Element.prototype.hasOwnProperty("classList")) {
+if (!("classList" in document.createElement("div"))) {
 
 (function () {
 
@@ -28,7 +28,7 @@ var
 		return this.replace(/^\s+|\s+$/g, "");
 	}
 	, arrIndexOf = Array[protoProp].indexOf || function (item) {
-		for (var i = 0, len = this.length; i < len; i++) {
+		for (var i = 0, len = this.length; i &lt; len; i++) {
 			if (i in this && this[i] === item) {
 				return i;
 			}
@@ -61,7 +61,7 @@ var
 			  trimmedClasses = strTrim.call(elem.className)
 			, classes = trimmedClasses ? trimmedClasses.split(/\s+/) : []
 		;
-		for (var i = 0, len = classes.length; i < len; i++) {
+		for (var i = 0, len = classes.length; i &lt; len; i++) {
 			this.push(classes[i]);
 		}
 		this._updateClassName = function () {
